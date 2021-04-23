@@ -1,0 +1,2 @@
+# dk.escale.auth-service
+ 
