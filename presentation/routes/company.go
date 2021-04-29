@@ -14,7 +14,7 @@ type companyDTO struct {
 }
 
 // GetAllCompanies get all companies
-func GetAllCompanies(w http.ResponseWriter, r *http.Request) {
+func GetAllCompaniesHandler(w http.ResponseWriter, r *http.Request) {
 
 	// conn := db.OpenConnection()
 
@@ -22,7 +22,7 @@ func GetAllCompanies(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetCompany get a single company
-func GetCompany(w http.ResponseWriter, r *http.Request) {
+func GetCompanyHandler(w http.ResponseWriter, r *http.Request) {
 
 	// conn := db.OpenConnection()
 
@@ -30,7 +30,7 @@ func GetCompany(w http.ResponseWriter, r *http.Request) {
 }
 
 // AddCompany create a company
-func AddCompany(w http.ResponseWriter, r *http.Request) {
+func AddCompanyHandler(w http.ResponseWriter, r *http.Request) {
 	// conn := db.OpenConnection()
 
 	var company models.Company

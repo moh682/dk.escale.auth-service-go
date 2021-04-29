@@ -4,22 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gorilla/mux"
+	"dk.escale.auth-service/presentation/routes"
 
 	"dk.escale.auth-service/config"
-	"dk.escale.auth-service/presentation/routes"
 )
 
+// Server application
+var env = config.GetEnvironments()
+
 func main() {
-	env := config.GetEnvironments()
-	if env == nil {
-		fmt.Println("Environments are nil")
-	}
-	r := mux.NewRouter()
-
-	r.HandleFunc("/employees", routes.GetAllEmployees).Methods("GET")
-	r.HandleFunc("/companies/all", routes.GetAllCompanies).Methods("GET")
-	r.HandleFunc("/companies", routes.AddCompany).Methods("POST")
-
-	http.ListenAndServe(fmt.Sprintf(":%s", env.ServerPort), r)
+	http.ListenAndServe(fmt.Sprintf(":%s", env.ServerPort), routes.GetMainAPI())
 }

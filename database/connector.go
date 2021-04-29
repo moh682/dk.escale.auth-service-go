@@ -28,7 +28,7 @@ func setup() *gorm.DB {
 	err = db.AutoMigrate(
 		&models.Location{},
 		&models.Company{},
-		&models.Department{},
+		// &models.Department{},
 		&models.Employee{},
 	)
 
@@ -36,7 +36,7 @@ func setup() *gorm.DB {
 		log.Fatalln(err.Error())
 	}
 
-	db.Model(&models.Department{}).Association("Location")
+	// db.Model(&models.Department{}).Association("Location")
 	db.Model(&models.Employee{}).Association("Company")
 	// db.Model(&models.Employee{}).Association("")
 

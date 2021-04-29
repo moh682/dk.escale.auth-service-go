@@ -3,44 +3,40 @@ package mappers
 import (
 	"dk.escale.auth-service/database"
 	"dk.escale.auth-service/database/models"
+
+	uuid "github.com/satori/go.uuid"
 )
 
-// CreateCompany creates a company
+// CreateCompany creates a company.
 func CreateCompany(company *models.Company) error {
 	db := database.GetConnection()
-
 	tx := db.Create(company)
-
 	if tx.Error != nil {
 		return tx.Error
 	}
-
-	// tx := db.Create(location)
-
-	// if tx.Error != nil {
-	// 	return tx.Error
-	// }
-
 	return tx.Error
 }
 
-// // CreateCompany creates a company
-// func CreateCompany(company *models.CompanyModel) {
-// 	db := database.GetConnection()
-// 	companyID := uuid.NewV4().String()
+// FindCompanyByCvr Finds a Company by cvr.
+func FindCompanyByCvr(cvr int) (*models.Company, error) {
+	db := database.GetConnection()
+	company := &models.Company{
+		Cvr: cvr,
+	}
+	tx := db.Find(company)
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+	return company, nil
+}
 
-// 	db.Create(&models.CompanyModel{
-// 		Base: models.Base{
-// 			ID: companyID,
-// 		},
-// 		Cvr:  company.Cvr,
-// 		Name: company.Name,
-// 		Departments: []models.DepartmentModel{
-// 			{
-// 				CompanyID: companyID,
-// 				Name:      "new",
-// 			},
-// 		},
-// 	})
-
-// }
+// FindAllEmployeesOfCompanyByUID Returs all company employees based on cvr
+func FindAllEmployeesOfCompanyByUID(uid uuid.UUID) ([]models.Employee, error) {
+	db := database.GetConnection()
+	var employees []models.Employee
+	tx := db.Where(&models.Employee{CompanyID: uid}).Find(&employees)
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+	return employees, nil
+}

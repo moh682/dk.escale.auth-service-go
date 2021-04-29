@@ -3,6 +3,8 @@ package config
 import (
 	"log"
 	"os"
+	"path"
+	"runtime"
 
 	"github.com/joho/godotenv"
 )
@@ -14,9 +16,26 @@ type Environments struct {
 	PostgresqlDatabase string
 	PostgresqlHost     string
 	ServerPort         string
+	JWTSecretKey       string
+	JWTIssuer          string
 }
 
 var env *Environments = nil
+
+func init() {
+	// environment := os.Getenv("ENV")
+	var dir string
+	_, filename, _, _ := runtime.Caller(0)
+	// if environment == "Test" {
+	dir = path.Join(path.Dir(filename), "..")
+	// } else {
+	// 	dir = path.Join(path.Dir(filename))
+	// }
+	err := os.Chdir(dir)
+	if err != nil {
+		panic(err)
+	}
+}
 
 func setup() {
 	dir, err := os.Getwd()
@@ -25,9 +44,13 @@ func setup() {
 	}
 	dir = dir + "/.env"
 
-	err = godotenv.Load(dir)
-	if err != nil {
-		log.Fatalln(err)
+	environment := os.Getenv("ENV")
+
+	if environment != "test" && environment != "production" {
+		err = godotenv.Load(dir)
+		if err != nil {
+			log.Fatalln(err)
+		}
 	}
 
 	env = &Environments{
@@ -36,6 +59,8 @@ func setup() {
 		PostgresqlUsername: os.Getenv("POSTGRES_USER"),
 		PostgresqlHost:     os.Getenv("POSTGRES_HOST"),
 		ServerPort:         os.Getenv("SERVER_PORT"),
+		JWTSecretKey:       os.Getenv("JWT_SECRET_KEY"),
+		JWTIssuer:          os.Getenv("JWT_ISSUER"),
 	}
 }
 

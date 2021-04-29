@@ -6,7 +6,7 @@ import (
 )
 
 // GetAllEmployees Retrieve all users
-func GetAllEmployees(w http.ResponseWriter, r *http.Request) {
+func GetAllEmployeesHandler(w http.ResponseWriter, r *http.Request) {
 
 	// conn := db.OpenConnection()
 
@@ -14,7 +14,7 @@ func GetAllEmployees(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetAllEmployeesInDepartment Retrieve all users
-func GetAllEmployeesInDepartment(w http.ResponseWriter, r *http.Request) {
+func GetAllEmployeesInDepartmentHandler(w http.ResponseWriter, r *http.Request) {
 
 	// conn := db.OpenConnection()
 
@@ -22,7 +22,7 @@ func GetAllEmployeesInDepartment(w http.ResponseWriter, r *http.Request) {
 }
 
 // AddEmployee Retrieve all users
-func AddEmployee(w http.ResponseWriter, r *http.Request) {
+func AddEmployeeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// conn := db.OpenConnection()
 
